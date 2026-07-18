@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import Link from "next/link";
+import { motion } from "framer-motion";
 import WatchlistButton from "../components/WatchlistButton";
 
 interface Coin {
@@ -19,21 +20,34 @@ export default function CoinsPage() {
   const [filteredCoins, setFilteredCoins] = useState<Coin[]>([]);
   const [search, setSearch] = useState("");
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState("");
 
   useEffect(() => {
+    const delay = (ms: number) => new Promise((r) => setTimeout(r, ms));
+
+    async function fetchWithRetry(url: string, retries = 3): Promise<any> {
+      for (let i = 0; i < retries; i++) {
+        try {
+          const res = await fetch(url);
+          if (res.ok) return await res.json();
+        } catch {}
+        await delay(1500);
+      }
+      return null;
+    }
+
     async function fetchCoins() {
-      try {
-        const res = await fetch(
-          "https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&order=market_cap_desc&per_page=100&page=1&sparkline=false"
-        );
-        const data = await res.json();
+      const data = await fetchWithRetry(
+        "https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&order=market_cap_desc&per_page=100&page=1&sparkline=false"
+      );
+
+      if (Array.isArray(data) && data.length > 0) {
         setCoins(data);
         setFilteredCoins(data);
-        setLoading(false);
-      } catch (error) {
-        console.error("Error fetching coins:", error);
-        setLoading(false);
+      } else {
+        setError("Failed to load coins. Please refresh in a few seconds.");
       }
+      setLoading(false);
     }
 
     fetchCoins();
@@ -48,29 +62,60 @@ export default function CoinsPage() {
 
   if (loading) {
     return (
-      <div className="min-h-screen flex items-center justify-center text-xl text-gray-400">
-        Loading coins...
+      <div className="min-h-screen flex items-center justify-center bg-black">
+        <motion.div
+          animate={{ rotate: 360 }}
+          transition={{ duration: 1, repeat: Infinity, ease: "linear" }}
+          className="w-12 h-12 border-4 border-green-500 border-t-transparent rounded-full"
+        />
+      </div>
+    );
+  }
+
+  if (error) {
+    return (
+      <div className="min-h-screen flex items-center justify-center bg-black text-red-400 text-xl px-4 text-center">
+        {error}
       </div>
     );
   }
 
   return (
     <div className="min-h-screen bg-black text-white px-4 md:px-10 py-10">
-      <h1 className="text-3xl md:text-4xl font-bold mb-6 text-center">
-        Top 100 Cryptocurrencies
-      </h1>
+      <div className="fixed inset-0 -z-10 bg-gradient-to-br from-black via-gray-950 to-green-950/20" />
 
-      <div className="flex justify-center mb-8">
+      <motion.h1
+        initial={{ opacity: 0, y: -20 }}
+        animate={{ opacity: 1, y: 0 }}
+        className="text-3xl md:text-4xl font-bold mb-6 text-center"
+      >
+        Top 100{" "}
+        <span className="text-green-400 drop-shadow-[0_0_20px_rgba(34,197,94,0.6)]">
+          Cryptocurrencies
+        </span>
+      </motion.h1>
+
+      <motion.div
+        initial={{ opacity: 0, scale: 0.9 }}
+        animate={{ opacity: 1, scale: 1 }}
+        transition={{ delay: 0.2 }}
+        className="flex justify-center mb-8"
+      >
         <input
           type="text"
-          placeholder="Search coin..."
+          placeholder="🔍 Search coin..."
           value={search}
           onChange={(e) => setSearch(e.target.value)}
-          className="w-full md:w-1/2 px-4 py-3 rounded-lg bg-gray-900 border border-gray-700 focus:outline-none focus:border-green-500"
+          className="w-full md:w-1/2 px-4 py-3 rounded-lg bg-gray-900/60 backdrop-blur-sm border border-gray-700 focus:outline-none focus:border-green-500 focus:shadow-[0_0_20px_rgba(34,197,94,0.3)] transition"
         />
-      </div>
+      </motion.div>
 
-      <div className="overflow-x-auto">
+      <motion.div
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ delay: 0.4 }}
+        className="overflow-x-auto bg-gray-900/40 backdrop-blur-sm rounded-2xl border border-gray-800 p-4"
+      >
         <table className="w-full border-collapse">
           <thead>
             <tr className="border-b border-gray-700 text-gray-400 text-sm md:text-base">
@@ -82,10 +127,13 @@ export default function CoinsPage() {
             </tr>
           </thead>
           <tbody>
-            {filteredCoins.map((coin) => (
-              <tr
+            {filteredCoins.map((coin, idx) => (
+              <motion.tr
                 key={coin.id}
-                className="border-b border-gray-800 hover:bg-gray-900 transition"
+                initial={{ opacity: 0, y: 10 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: Math.min(idx * 0.02, 0.5) }}
+                className="border-b border-gray-800 hover:bg-gray-800/40 transition"
               >
                 <td className="py-4">
                   <WatchlistButton coinId={coin.id} />
@@ -93,17 +141,15 @@ export default function CoinsPage() {
                 <td className="py-4">
                   <Link
                     href={`/coin/${coin.id}`}
-                    className="flex items-center gap-3 hover:text-green-400"
+                    className="flex items-center gap-3 hover:text-green-400 transition"
                   >
                     <img src={coin.image} alt={coin.name} className="w-6 h-6" />
                     {coin.name} ({coin.symbol.toUpperCase()})
                   </Link>
                 </td>
-                <td className="py-4">
-                  ${coin.current_price.toLocaleString()}
-                </td>
+                <td className="py-4">${coin.current_price.toLocaleString()}</td>
                 <td
-                  className={`py-4 ${
+                  className={`py-4 font-bold ${
                     coin.price_change_percentage_24h >= 0
                       ? "text-green-500"
                       : "text-red-500"
@@ -114,11 +160,11 @@ export default function CoinsPage() {
                 <td className="py-4 hidden md:table-cell">
                   ${coin.market_cap.toLocaleString()}
                 </td>
-              </tr>
+              </motion.tr>
             ))}
           </tbody>
         </table>
-      </div>
+      </motion.div>
     </div>
   );
 }

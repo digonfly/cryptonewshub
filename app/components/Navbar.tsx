@@ -2,31 +2,40 @@
 
 import Link from "next/link";
 import { useState } from "react";
+import { motion } from "framer-motion";
 
 const navLinks = [
   { href: "/", label: "Home" },
   { href: "/coins", label: "Coins" },
   { href: "/trending", label: "Trending" },
+  { href: "/news", label: "📰 News" },
   { href: "/airdrops", label: "Airdrops" },
   { href: "/watchlist", label: "⭐ Watchlist" },
+  { href: "/alerts", label: "🔔 Alerts" },
 ];
 
 export default function Navbar() {
   const [menuOpen, setMenuOpen] = useState(false);
 
   return (
-    <nav className="bg-gray-950 border-b border-gray-800 px-4 md:px-10 py-4 sticky top-0 z-50">
+    <motion.nav
+      initial={{ y: -100 }}
+      animate={{ y: 0 }}
+      transition={{ duration: 0.5 }}
+      className="bg-gray-950/80 backdrop-blur-md border-b border-gray-800 px-4 md:px-10 py-4 sticky top-0 z-50"
+    >
       <div className="flex items-center justify-between">
-        <Link href="/" className="text-2xl font-bold">
-          🚀 Crypto<span className="text-green-400">NewsHub</span>
+        <Link href="/" className="text-xl md:text-2xl font-bold flex items-center gap-2">
+          <span>🚀</span>
+          <span className="rainbow-text">CryptoNewsHub</span>
         </Link>
 
-        <div className="hidden md:flex items-center gap-6">
+        <div className="hidden lg:flex items-center gap-4">
           {navLinks.map((link) => (
             <Link
               key={link.href}
               href={link.href}
-              className="text-gray-400 hover:text-green-400 transition font-medium"
+              className="text-gray-400 hover:text-green-400 hover:drop-shadow-[0_0_10px_rgba(34,197,94,0.6)] transition font-medium text-sm"
             >
               {link.label}
             </Link>
@@ -34,7 +43,7 @@ export default function Navbar() {
         </div>
 
         <button
-          className="md:hidden text-gray-300 text-2xl"
+          className="lg:hidden text-gray-300 text-2xl"
           onClick={() => setMenuOpen(!menuOpen)}
         >
           {menuOpen ? "✕" : "☰"}
@@ -42,7 +51,11 @@ export default function Navbar() {
       </div>
 
       {menuOpen && (
-        <div className="md:hidden mt-4 flex flex-col gap-4 pb-2">
+        <motion.div
+          initial={{ opacity: 0, height: 0 }}
+          animate={{ opacity: 1, height: "auto" }}
+          className="lg:hidden mt-4 flex flex-col gap-4 pb-2"
+        >
           {navLinks.map((link) => (
             <Link
               key={link.href}
@@ -53,8 +66,8 @@ export default function Navbar() {
               {link.label}
             </Link>
           ))}
-        </div>
+        </motion.div>
       )}
-    </nav>
+    </motion.nav>
   );
 }

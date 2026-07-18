@@ -4,6 +4,8 @@ import { useEffect, useState } from "react";
 import { useParams } from "next/navigation";
 import Link from "next/link";
 import WatchlistButton from "../../components/WatchlistButton";
+import PriceAlertButton from "../../components/PriceAlertButton";
+import ShareButtons from "../../components/ShareButtons";
 import {
   LineChart,
   Line,
@@ -122,7 +124,7 @@ export default function CoinDetailPage() {
         ← Back to Coins
       </Link>
 
-      <div className="flex items-center justify-between mb-8">
+      <div className="flex items-center justify-between mb-8 flex-wrap gap-4">
         <div className="flex items-center gap-4">
           <img src={coin.image.large} alt={coin.name} className="w-16 h-16" />
           <div>
@@ -130,7 +132,16 @@ export default function CoinDetailPage() {
             <p className="text-gray-400 text-lg">{coin.symbol.toUpperCase()}</p>
           </div>
         </div>
-        <WatchlistButton coinId={coin.id} />
+        <div className="flex items-center gap-3 flex-wrap">
+          <PriceAlertButton
+            coinId={coin.id}
+            coinName={coin.name}
+            coinSymbol={coin.symbol}
+            currentPrice={price}
+          />
+          <ShareButtons title={`${coin.name} (${coin.symbol.toUpperCase()}) - $${price.toLocaleString()}`} />
+          <WatchlistButton coinId={coin.id} />
+        </div>
       </div>
 
       <div className="grid grid-cols-2 md:grid-cols-3 gap-4 mb-8">

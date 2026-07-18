@@ -40,16 +40,14 @@ export default function CoinsPage() {
       const data = await fetchWithRetry(
         "https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&order=market_cap_desc&per_page=100&page=1&sparkline=false"
       );
-
       if (Array.isArray(data) && data.length > 0) {
         setCoins(data);
         setFilteredCoins(data);
       } else {
-        setError("Failed to load coins. Please refresh in a few seconds.");
+        setError("Failed to load coins. Please refresh.");
       }
       setLoading(false);
     }
-
     fetchCoins();
   }, []);
 
@@ -62,7 +60,7 @@ export default function CoinsPage() {
 
   if (loading) {
     return (
-      <div className="min-h-screen flex items-center justify-center bg-black">
+      <div className="min-h-screen flex items-center justify-center">
         <motion.div
           animate={{ rotate: 360 }}
           transition={{ duration: 1, repeat: Infinity, ease: "linear" }}
@@ -74,25 +72,20 @@ export default function CoinsPage() {
 
   if (error) {
     return (
-      <div className="min-h-screen flex items-center justify-center bg-black text-red-400 text-xl px-4 text-center">
+      <div className="min-h-screen flex items-center justify-center text-red-400 text-xl">
         {error}
       </div>
     );
   }
 
   return (
-    <div className="min-h-screen bg-black text-white px-4 md:px-10 py-10">
-      <div className="fixed inset-0 -z-10 bg-gradient-to-br from-black via-gray-950 to-green-950/20" />
-
+    <div className="min-h-screen text-white px-4 md:px-10 py-10">
       <motion.h1
         initial={{ opacity: 0, y: -20 }}
         animate={{ opacity: 1, y: 0 }}
         className="text-3xl md:text-4xl font-bold mb-6 text-center"
       >
-        Top 100{" "}
-        <span className="text-green-400 drop-shadow-[0_0_20px_rgba(34,197,94,0.6)]">
-          Cryptocurrencies
-        </span>
+        Top 100 <span className="rainbow-text">Cryptocurrencies</span>
       </motion.h1>
 
       <motion.div
@@ -106,7 +99,7 @@ export default function CoinsPage() {
           placeholder="🔍 Search coin..."
           value={search}
           onChange={(e) => setSearch(e.target.value)}
-          className="w-full md:w-1/2 px-4 py-3 rounded-lg bg-gray-900/60 backdrop-blur-sm border border-gray-700 focus:outline-none focus:border-green-500 focus:shadow-[0_0_20px_rgba(34,197,94,0.3)] transition"
+          className="w-full md:w-1/2 px-4 py-3 rounded-lg bg-gray-900/60 backdrop-blur-sm border border-gray-700 focus:outline-none focus:border-green-500 transition"
         />
       </motion.div>
 
@@ -139,27 +132,16 @@ export default function CoinsPage() {
                   <WatchlistButton coinId={coin.id} />
                 </td>
                 <td className="py-4">
-                  <Link
-                    href={`/coin/${coin.id}`}
-                    className="flex items-center gap-3 hover:text-green-400 transition"
-                  >
+                  <Link href={`/coin/${coin.id}`} className="flex items-center gap-3 hover:text-green-400 transition">
                     <img src={coin.image} alt={coin.name} className="w-6 h-6" />
                     {coin.name} ({coin.symbol.toUpperCase()})
                   </Link>
                 </td>
                 <td className="py-4">${coin.current_price.toLocaleString()}</td>
-                <td
-                  className={`py-4 font-bold ${
-                    coin.price_change_percentage_24h >= 0
-                      ? "text-green-500"
-                      : "text-red-500"
-                  }`}
-                >
+                <td className={`py-4 font-bold ${coin.price_change_percentage_24h >= 0 ? "text-green-500" : "text-red-500"}`}>
                   {coin.price_change_percentage_24h?.toFixed(2)}%
                 </td>
-                <td className="py-4 hidden md:table-cell">
-                  ${coin.market_cap.toLocaleString()}
-                </td>
+                <td className="py-4 hidden md:table-cell">${coin.market_cap.toLocaleString()}</td>
               </motion.tr>
             ))}
           </tbody>

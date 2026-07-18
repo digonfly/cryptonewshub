@@ -23,7 +23,6 @@ export default function NewsPage() {
       try {
         const res = await fetch("/api/news");
         const data = await res.json();
-
         if (data.results && Array.isArray(data.results)) {
           setNews(data.results);
         } else {
@@ -41,7 +40,7 @@ export default function NewsPage() {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-black flex items-center justify-center">
+      <div className="min-h-screen flex items-center justify-center">
         <motion.div
           animate={{ rotate: 360 }}
           transition={{ duration: 1, repeat: Infinity, ease: "linear" }}
@@ -52,23 +51,12 @@ export default function NewsPage() {
   }
 
   return (
-    <div className="min-h-screen bg-black text-white px-4 md:px-10 py-10">
-      <div className="fixed inset-0 -z-10 bg-gradient-to-br from-black via-gray-950 to-blue-950/20" />
-
-      <motion.div
-        initial={{ opacity: 0, y: -20 }}
-        animate={{ opacity: 1, y: 0 }}
-        className="text-center mb-10"
-      >
+    <div className="min-h-screen text-white px-4 md:px-10 py-10">
+      <motion.div initial={{ opacity: 0, y: -20 }} animate={{ opacity: 1, y: 0 }} className="text-center mb-10">
         <h1 className="text-3xl md:text-5xl font-bold mb-3">
-          📰{" "}
-          <span className="text-blue-400 drop-shadow-[0_0_25px_rgba(59,130,246,0.8)]">
-            Crypto News
-          </span>
+          📰 <span className="rainbow-text">Crypto News</span>
         </h1>
-        <p className="text-gray-400 max-w-2xl mx-auto">
-          Latest crypto news and market updates
-        </p>
+        <p className="text-gray-400 max-w-2xl mx-auto">Latest crypto news and market updates</p>
       </motion.div>
 
       {error ? (
@@ -93,41 +81,25 @@ export default function NewsPage() {
                     src={article.image_url}
                     alt={article.title}
                     className="w-full h-full object-cover hover:scale-110 transition duration-500"
-                    onError={(e) => {
-                      (e.target as HTMLImageElement).style.display = "none";
-                    }}
+                    onError={(e) => { (e.target as HTMLImageElement).style.display = "none"; }}
                   />
                 </div>
               )}
-
               <div className="p-5 flex-1 flex flex-col">
                 <div className="flex items-center justify-between mb-3 text-xs text-gray-400">
                   <span className="bg-blue-500/20 text-blue-400 px-2 py-1 rounded-full font-semibold">
                     {article.source_id || "News"}
                   </span>
                   <span>
-                    {new Date(article.pubDate).toLocaleDateString("en-US", {
-                      month: "short",
-                      day: "numeric",
-                      year: "numeric",
-                    })}
+                    {new Date(article.pubDate).toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric" })}
                   </span>
                 </div>
-
-                <h2 className="text-lg font-bold mb-2 hover:text-blue-400 transition line-clamp-2">
-                  {article.title}
-                </h2>
-
+                <h2 className="text-lg font-bold mb-2 hover:text-blue-400 transition line-clamp-2">{article.title}</h2>
                 {article.description && (
-                  <p className="text-gray-400 text-sm mb-4 line-clamp-3 flex-1">
-                    {article.description}
-                  </p>
+                  <p className="text-gray-400 text-sm mb-4 line-clamp-3 flex-1">{article.description}</p>
                 )}
-
                 <div className="mt-auto">
-                  <span className="inline-block bg-blue-500/10 text-blue-400 px-3 py-1 rounded-full text-xs font-medium">
-                    Read More →
-                  </span>
+                  <span className="inline-block bg-blue-500/10 text-blue-400 px-3 py-1 rounded-full text-xs font-medium">Read More →</span>
                 </div>
               </div>
             </motion.a>

@@ -1,11 +1,17 @@
 import { NextResponse } from "next/server";
 
-export async function GET() {
+export async function GET(request: Request) {
   try {
     const apiKey = process.env.NEWSDATA_API_KEY;
 
+    // Search query (default = crypto)
+    const search =
+      new URL(request.url).searchParams.get("q") || "crypto";
+
     const res = await fetch(
-      `https://newsdata.io/api/1/news?apikey=${apiKey}&q=crypto&language=en`
+      `https://newsdata.io/api/1/news?apikey=${apiKey}&q=${encodeURIComponent(
+        search
+      )}&language=en`
     );
 
     if (!res.ok) {
@@ -16,7 +22,7 @@ export async function GET() {
 
     return NextResponse.json(data.results || []);
   } catch (error: any) {
-    console.error(error);
+    console.error("News API Error:", error);
 
     return NextResponse.json(
       {

@@ -1,14 +1,18 @@
 import { NextResponse } from "next/server";
 
-export async function GET(request: Request) {
+export async function GET(
+  request: Request,
+  { params }: { params: Promise<{ id: string }> }
+) {
   try {
-    const { searchParams } = new URL(request.url);
-
-    const limit = searchParams.get("limit") || "4";
+    const { id } = await params;
 
     const res = await fetch(
-      `https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&order=market_cap_desc&per_page=${limit}&page=1&sparkline=false`,
+      `https://api.coingecko.com/api/v3/coins/${id}`,
       {
+        headers: {
+          accept: "application/json",
+        },
         next: {
           revalidate: 60,
         },
@@ -16,7 +20,7 @@ export async function GET(request: Request) {
     );
 
     if (!res.ok) {
-      throw new Error("Failed to fetch coins");
+      throw new Error("Failed to fetch coin");
     }
 
     const data = await res.json();
@@ -28,7 +32,7 @@ export async function GET(request: Request) {
     return NextResponse.json(
       {
         success: false,
-        message: "Failed to fetch coins",
+        message: "Failed to fetch coin",
       },
       {
         status: 500,

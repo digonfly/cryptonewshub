@@ -10,8 +10,14 @@ export default function BlogArticlePage() {
   const { slug } = useParams();
   const [article, setArticle] = useState<BlogArticle | null>(null);
   const [loading, setLoading] = useState(true);
+  const [currentUrl, setCurrentUrl] = useState("");
 
   useEffect(() => {
+    // Get current URL for sharing
+    if (typeof window !== "undefined") {
+      setCurrentUrl(window.location.href);
+    }
+
     // First check static articles
     let found = blogArticles.find((a) => a.slug === slug);
 
@@ -52,6 +58,12 @@ export default function BlogArticlePage() {
       </div>
     );
   }
+
+  // Share text with title + URL
+  const shareText = `${article.title}\n\nRead more: ${currentUrl}`;
+  const encodedShareText = encodeURIComponent(shareText);
+  const encodedTitle = encodeURIComponent(article.title);
+  const encodedUrl = encodeURIComponent(currentUrl);
 
   return (
     <div className="min-h-screen text-white px-4 md:px-10 py-10">
@@ -118,35 +130,67 @@ export default function BlogArticlePage() {
               }}
             />
 
+            {/* Share Section */}
             <div className="mt-10 pt-6 border-t border-gray-800">
-              <div className="flex items-center justify-between flex-wrap gap-2">
+              <h3 className="text-lg font-bold mb-4">📤 Share this article:</h3>
+              <div className="flex items-center justify-between flex-wrap gap-3">
                 <Link
                   href="/blog"
                   className="text-green-400 hover:text-green-300"
                 >
                   ← Back to Blog
                 </Link>
-                <div className="flex gap-2">
+                <div className="flex gap-2 flex-wrap">
+                  {/* WhatsApp */}
                   <a
-                    href={`https://twitter.com/intent/tweet?text=${encodeURIComponent(
-                      article.title
-                    )}`}
+                    href={`https://wa.me/?text=${encodedShareText}`}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-lg text-sm font-bold"
-                  >
-                    🐦 Share
-                  </a>
-                  <a
-                    href={`https://wa.me/?text=${encodeURIComponent(
-                      article.title
-                    )}`}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="bg-green-500 hover:bg-green-600 text-white px-4 py-2 rounded-lg text-sm font-bold"
+                    className="bg-green-500 hover:bg-green-600 text-white px-4 py-2 rounded-lg text-sm font-bold flex items-center gap-1"
                   >
                     💬 WhatsApp
                   </a>
+
+                  {/* Twitter */}
+                  <a
+                    href={`https://twitter.com/intent/tweet?text=${encodedTitle}&url=${encodedUrl}`}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="bg-sky-500 hover:bg-sky-600 text-white px-4 py-2 rounded-lg text-sm font-bold flex items-center gap-1"
+                  >
+                    🐦 Twitter
+                  </a>
+
+                  {/* Facebook */}
+                  <a
+                    href={`https://www.facebook.com/sharer/sharer.php?u=${encodedUrl}`}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg text-sm font-bold flex items-center gap-1"
+                  >
+                    📘 Facebook
+                  </a>
+
+                  {/* Telegram */}
+                  <a
+                    href={`https://t.me/share/url?url=${encodedUrl}&text=${encodedTitle}`}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-lg text-sm font-bold flex items-center gap-1"
+                  >
+                    ✈️ Telegram
+                  </a>
+
+                  {/* Copy Link */}
+                  <button
+                    onClick={() => {
+                      navigator.clipboard.writeText(currentUrl);
+                      alert("✅ Link copied to clipboard!");
+                    }}
+                    className="bg-purple-500 hover:bg-purple-600 text-white px-4 py-2 rounded-lg text-sm font-bold flex items-center gap-1"
+                  >
+                    🔗 Copy Link
+                  </button>
                 </div>
               </div>
             </div>

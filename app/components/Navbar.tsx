@@ -9,6 +9,7 @@ const navLinks = [
   { href: "/coins", label: "Coins" },
   { href: "/trending", label: "Trending" },
   { href: "/news", label: "📰 News" },
+  { href: "/blog", label: "📝 Blog" },
   { href: "/airdrops", label: "Airdrops" },
   { href: "/watchlist", label: "⭐ Watchlist" },
   { href: "/alerts", label: "🔔 Alerts" },
@@ -30,12 +31,12 @@ export default function Navbar() {
           <span className="rainbow-text">CryptoNewsHub</span>
         </Link>
 
-        <div className="hidden lg:flex items-center gap-4">
+        <div className="hidden lg:flex items-center gap-3">
           {navLinks.map((link) => (
             <Link
               key={link.href}
               href={link.href}
-              className="text-gray-400 hover:text-green-400 hover:drop-shadow-[0_0_10px_rgba(34,197,94,0.6)] transition font-medium text-sm"
+              className="text-gray-400 hover:text-green-400 transition font-medium text-sm"
             >
               {link.label}
             </Link>

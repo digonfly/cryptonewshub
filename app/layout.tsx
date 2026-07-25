@@ -4,12 +4,14 @@ import "./globals.css";
 import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
 import CryptoBackground from "./components/CryptoBackground";
+import GoogleAnalytics from "./components/GoogleAnalytics";
 
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
   title: "CryptoNewsHub - Real-time Crypto Prices & News",
-  description: "Track crypto prices, market trends, news, and manage your watchlist with real-time alerts.",
+  description:
+    "Track crypto prices, market trends, news, and manage your watchlist with real-time alerts.",
   verification: {
     google: "NdUfnBGrTvAk8WBaYUgaiTuCkXmj75Ok-SOmo2Qfvzw",
   },
@@ -23,11 +25,10 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`${inter.className} bg-black text-white`}>
+        <GoogleAnalytics GA_ID="G-LXP71R82RE" />
         <CryptoBackground />
         <Navbar />
-        <main className="min-h-screen">
-          {children}
-        </main>
+        <main className="min-h-screen">{children}</main>
         <Footer />
       </body>
     </html>

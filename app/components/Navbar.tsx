@@ -10,6 +10,8 @@ const navLinks = [
   { href: "/trending", label: "Trending" },
   { href: "/news", label: "📰 News" },
   { href: "/blog", label: "📝 Blog" },
+  { href: "/converter", label: "🔄 Converter" },
+  { href: "/portfolio", label: "💼 Portfolio" },
   { href: "/airdrops", label: "Airdrops" },
   { href: "/watchlist", label: "⭐ Watchlist" },
   { href: "/alerts", label: "🔔 Alerts" },
@@ -31,7 +33,7 @@ export default function Navbar() {
           <span className="rainbow-text">CryptoNewsHub</span>
         </Link>
 
-        <div className="hidden lg:flex items-center gap-3">
+        <div className="hidden xl:flex items-center gap-3">
           {navLinks.map((link) => (
             <Link
               key={link.href}
@@ -44,7 +46,7 @@ export default function Navbar() {
         </div>
 
         <button
-          className="lg:hidden text-gray-300 text-2xl"
+          className="xl:hidden text-gray-300 text-2xl"
           onClick={() => setMenuOpen(!menuOpen)}
         >
           {menuOpen ? "✕" : "☰"}
@@ -55,7 +57,7 @@ export default function Navbar() {
         <motion.div
           initial={{ opacity: 0, height: 0 }}
           animate={{ opacity: 1, height: "auto" }}
-          className="lg:hidden mt-4 flex flex-col gap-4 pb-2"
+          className="xl:hidden mt-4 flex flex-col gap-4 pb-2"
         >
           {navLinks.map((link) => (
             <Link

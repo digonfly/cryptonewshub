@@ -4,6 +4,8 @@ import { useEffect, useState } from "react";
 import Link from "next/link";
 import { motion } from "framer-motion";
 import Bitcoin3D from "./components/Bitcoin3D";
+import AffiliateBanner from "./components/AffiliateBanner";
+import FAQ from "./components/FAQ";
 
 interface Coin {
   id: string;
@@ -160,6 +162,9 @@ export default function HomePage() {
         </motion.section>
       )}
 
+      {/* Affiliate Banner */}
+      <AffiliateBanner />
+
       {/* Fear & Greed */}
       {fearGreedValue && (
         <section className="px-4 md:px-10 py-6">
@@ -223,6 +228,9 @@ export default function HomePage() {
           </div>
         </section>
       )}
+
+      {/* ❓ FAQ SECTION - NEW! */}
+      <FAQ />
     </div>
   );
 }

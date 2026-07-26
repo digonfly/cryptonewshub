@@ -5,6 +5,7 @@ import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
 import CryptoBackground from "./components/CryptoBackground";
 import GoogleAnalytics from "./components/GoogleAnalytics";
+import WelcomeScreen from "./components/WelcomeScreen";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -54,6 +55,9 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`${inter.className} bg-black text-white`}>
+        {/* 🎬 Welcome Screen - Pehli baar dikhega */}
+        <WelcomeScreen />
+        
         <GoogleAnalytics GA_ID="G-LXP71R82RE" />
         <CryptoBackground />
         <Navbar />

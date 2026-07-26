@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { useState } from "react";
 import { motion } from "framer-motion";
+import AnimatedLogo from "./AnimatedLogo";
 
 const navLinks = [
   { href: "/", label: "Home" },
@@ -12,7 +13,7 @@ const navLinks = [
   { href: "/blog", label: "📝 Blog" },
   { href: "/converter", label: "🔄 Converter" },
   { href: "/portfolio", label: "💼 Portfolio" },
-  { href: "/airdrops", label: "Airdrops" },
+  { href: "/airdrops", label: "🎁 Airdrops" },
   { href: "/watchlist", label: "⭐ Watchlist" },
   { href: "/alerts", label: "🔔 Alerts" },
 ];
@@ -25,14 +26,15 @@ export default function Navbar() {
       initial={{ y: -100 }}
       animate={{ y: 0 }}
       transition={{ duration: 0.5 }}
-      className="bg-gray-950/80 backdrop-blur-md border-b border-gray-800 px-4 md:px-10 py-4 sticky top-0 z-50"
+      className="bg-gray-950/80 backdrop-blur-md border-b border-gray-800 px-4 md:px-10 py-3 sticky top-0 z-50"
     >
       <div className="flex items-center justify-between">
-        <Link href="/" className="text-xl md:text-2xl font-bold flex items-center gap-2">
-          <span>🚀</span>
-          <span className="rainbow-text">CryptoNewsHub</span>
+        {/* Animated Logo */}
+        <Link href="/" className="hover-lift">
+          <AnimatedLogo size="small" showText={true} />
         </Link>
 
+        {/* Desktop Links */}
         <div className="hidden xl:flex items-center gap-3">
           {navLinks.map((link) => (
             <Link
@@ -45,6 +47,7 @@ export default function Navbar() {
           ))}
         </div>
 
+        {/* Mobile Menu Button */}
         <button
           className="xl:hidden text-gray-300 text-2xl"
           onClick={() => setMenuOpen(!menuOpen)}
@@ -53,6 +56,7 @@ export default function Navbar() {
         </button>
       </div>
 
+      {/* Mobile Menu */}
       {menuOpen && (
         <motion.div
           initial={{ opacity: 0, height: 0 }}

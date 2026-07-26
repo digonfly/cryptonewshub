@@ -8,6 +8,7 @@ import AffiliateBanner from "./components/AffiliateBanner";
 import FAQ from "./components/FAQ";
 import AdBanner from "./components/AdBanner";
 import Newsletter from "./components/Newsletter";
+import AnimatedLogo from "./components/AnimatedLogo";
 
 interface Coin {
   id: string;
@@ -98,35 +99,57 @@ export default function HomePage() {
 
   return (
     <div className="min-h-screen text-white">
-      {/* Hero */}
+      {/* Hero with BIG ANIMATED LOGO */}
       <section className="relative py-16 px-4">
-        <div className="max-w-7xl mx-auto grid md:grid-cols-2 gap-8 items-center">
-          <motion.div
-            initial={{ opacity: 0, x: -50 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.8 }}
-          >
-            <h1 className="text-4xl md:text-6xl font-bold mb-4">
-              🚀 <span className="rainbow-text">Crypto News Hub</span>
-            </h1>
-            <p className="text-gray-400 text-lg md:text-xl mb-8">
-              Real-time crypto prices, news & market insights
-            </p>
-            <Link
-              href="/coins"
-              className="bg-green-500 hover:bg-green-600 text-black font-bold px-8 py-4 rounded-xl text-lg transition shadow-[0_0_30px_rgba(34,197,94,0.5)] inline-block"
-            >
-              View All Coins →
-            </Link>
-          </motion.div>
-
+        <div className="max-w-7xl mx-auto">
+          {/* Big Animated Logo Center */}
           <motion.div
             initial={{ opacity: 0, scale: 0.5 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ duration: 1 }}
+            className="flex justify-center mb-10"
           >
-            <Bitcoin3D />
+            <AnimatedLogo size="large" showText={true} />
           </motion.div>
+
+          {/* Hero Content */}
+          <div className="grid md:grid-cols-2 gap-8 items-center">
+            <motion.div
+              initial={{ opacity: 0, x: -50 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.8, delay: 0.3 }}
+            >
+              <h1 className="text-4xl md:text-6xl font-bold mb-4">
+                Welcome to{" "}
+                <span className="rainbow-text">CryptoNewsHub</span>
+              </h1>
+              <p className="text-gray-400 text-lg md:text-xl mb-8">
+                🚀 Real-time crypto prices, AI-powered blogs, airdrops A-Z, portfolio tracker & more — all in one place!
+              </p>
+              <div className="flex gap-4 flex-wrap">
+                <Link
+                  href="/coins"
+                  className="bg-green-500 hover:bg-green-600 text-black font-bold px-8 py-4 rounded-xl text-lg transition shadow-[0_0_30px_rgba(34,197,94,0.5)] inline-block"
+                >
+                  📊 View Coins
+                </Link>
+                <Link
+                  href="/airdrops"
+                  className="bg-purple-500 hover:bg-purple-600 text-white font-bold px-8 py-4 rounded-xl text-lg transition shadow-[0_0_30px_rgba(168,85,247,0.5)] inline-block"
+                >
+                  🎁 Airdrops
+                </Link>
+              </div>
+            </motion.div>
+
+            <motion.div
+              initial={{ opacity: 0, scale: 0.5 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ duration: 1, delay: 0.5 }}
+            >
+              <Bitcoin3D />
+            </motion.div>
+          </div>
         </div>
       </section>
 
@@ -241,7 +264,7 @@ export default function HomePage() {
         <AdBanner type="rectangle" />
       </div>
 
-      {/* 📧 NEWSLETTER - NEW! */}
+      {/* Newsletter */}
       <Newsletter />
 
       {/* FAQ Section */}
@@ -252,7 +275,7 @@ export default function HomePage() {
         <AdBanner type="banner" />
       </div>
 
-      {/* Social Bar (Bottom Fixed) */}
+      {/* Social Bar */}
       <AdBanner type="social-bar" />
     </div>
   );

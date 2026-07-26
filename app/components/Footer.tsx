@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import Image from "next/image";
 import { motion } from "framer-motion";
 import { useEffect, useState } from "react";
 
@@ -34,29 +35,21 @@ export default function Footer() {
 
   return (
     <footer className="bg-gray-950/80 backdrop-blur-md border-t border-gray-800 mt-20 relative overflow-hidden">
-
       {/* Scrolling Coins Ticker */}
       {coins.length > 0 && (
         <div className="relative border-b border-gray-800 bg-gradient-to-r from-black via-gray-900 to-black py-4 overflow-hidden">
           <div className="flex ticker-scroll gap-8 whitespace-nowrap">
-            {/* Repeat coins twice for seamless loop */}
             {[...coins, ...coins].map((coin, idx) => (
               <div
                 key={`${coin.id}-${idx}`}
                 className="flex items-center gap-3 bg-gray-900/60 backdrop-blur-sm border border-gray-800 rounded-full px-5 py-2 hover:border-green-500 transition"
               >
-                <img
-                  src={coin.image}
-                  alt={coin.name}
-                  className="w-8 h-8"
-                />
+                <img src={coin.image} alt={coin.name} className="w-8 h-8" />
                 <div className="flex flex-col">
                   <span className="text-white font-bold text-sm">
                     {coin.symbol.toUpperCase()}
                   </span>
-                  <span className="text-gray-400 text-xs">
-                    {coin.name}
-                  </span>
+                  <span className="text-gray-400 text-xs">{coin.name}</span>
                 </div>
                 <div className="flex flex-col items-end">
                   <span className="text-white font-bold text-sm">
@@ -82,19 +75,27 @@ export default function Footer() {
       {/* Main Footer Content */}
       <div className="max-w-7xl mx-auto px-4 md:px-10 py-10">
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8 mb-8">
-
-          {/* Brand */}
+          {/* Brand with Logo */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
           >
-            <Link href="/" className="text-2xl font-bold mb-3 inline-flex items-center gap-2">
-              <span>🚀</span>
-              <span className="rainbow-text">CryptoNewsHub</span>
+            <Link href="/" className="flex items-center gap-3 mb-3 group">
+              <div className="relative w-16 h-16 rounded-full overflow-hidden border-2 border-purple-500/30 group-hover:border-purple-500 transition">
+                <Image
+                  src="/logo.png"
+                  alt="CryptoNewsHub Logo"
+                  fill
+                  className="object-cover"
+                />
+              </div>
+              <span className="text-2xl font-bold rainbow-text">
+                CryptoNewsHub
+              </span>
             </Link>
             <p className="text-gray-400 text-sm mt-3">
-              Real-time crypto prices, news, and market insights.
+              Real-time crypto prices, AI-powered blogs, airdrops & complete crypto tools in one place.
             </p>
 
             {/* Popular Coins Mini */}
@@ -143,18 +144,33 @@ export default function Footer() {
                   News
                 </Link>
               </li>
+              <li>
+                <Link href="/blog" className="text-gray-400 hover:text-green-400 text-sm transition">
+                  Blog
+                </Link>
+              </li>
             </ul>
           </motion.div>
 
-          {/* Features */}
+          {/* Tools */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ delay: 0.2 }}
           >
-            <h3 className="text-white font-bold mb-3">Features</h3>
+            <h3 className="text-white font-bold mb-3">Tools</h3>
             <ul className="space-y-2">
+              <li>
+                <Link href="/converter" className="text-gray-400 hover:text-cyan-400 text-sm transition">
+                  🔄 Converter
+                </Link>
+              </li>
+              <li>
+                <Link href="/portfolio" className="text-gray-400 hover:text-green-400 text-sm transition">
+                  💼 Portfolio
+                </Link>
+              </li>
               <li>
                 <Link href="/watchlist" className="text-gray-400 hover:text-yellow-400 text-sm transition">
                   ⭐ Watchlist

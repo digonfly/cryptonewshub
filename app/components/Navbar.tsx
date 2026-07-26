@@ -16,6 +16,7 @@ const navLinks = [
   { href: "/airdrops", label: "🎁 Airdrops" },
   { href: "/watchlist", label: "⭐ Watchlist" },
   { href: "/alerts", label: "🔔 Alerts" },
+  { href: "/about", label: "👋 About" },
 ];
 
 export default function Navbar() {

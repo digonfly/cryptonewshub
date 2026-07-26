@@ -75,25 +75,27 @@ export default function Footer() {
       {/* Main Footer Content */}
       <div className="max-w-7xl mx-auto px-4 md:px-10 py-10">
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8 mb-8">
-          {/* Brand with Logo */}
+          {/* Brand with Logo Image */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
           >
+            {/* Logo Image from Public Folder */}
             <Link href="/" className="flex items-center gap-3 mb-3 group">
-              <div className="relative w-16 h-16 rounded-full overflow-hidden border-2 border-purple-500/30 group-hover:border-purple-500 transition">
+              <div className="relative w-16 h-16 md:w-20 md:h-20 group-hover:scale-110 transition duration-300">
                 <Image
                   src="/logo.png"
                   alt="CryptoNewsHub Logo"
                   fill
-                  className="object-cover"
+                  className="object-contain"
                 />
               </div>
               <span className="text-2xl font-bold rainbow-text">
                 CryptoNewsHub
               </span>
             </Link>
+
             <p className="text-gray-400 text-sm mt-3">
               Real-time crypto prices, AI-powered blogs, airdrops & complete crypto tools in one place.
             </p>
@@ -149,6 +151,11 @@ export default function Footer() {
                   Blog
                 </Link>
               </li>
+              <li>
+                <Link href="/about" className="text-gray-400 hover:text-purple-400 text-sm transition">
+                  👋 About
+                </Link>
+              </li>
             </ul>
           </motion.div>
 
@@ -189,23 +196,56 @@ export default function Footer() {
             </ul>
           </motion.div>
 
-          {/* Resources */}
+          {/* Connect */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ delay: 0.3 }}
           >
-            <h3 className="text-white font-bold mb-3">Resources</h3>
-            <ul className="space-y-2">
+            <h3 className="text-white font-bold mb-3">Connect</h3>
+            <ul className="space-y-2 mb-4">
+              <li>
+                <a
+                  href="https://x.com/cryptonewshub0"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-gray-400 hover:text-sky-400 text-sm transition flex items-center gap-2"
+                >
+                  🐦 Twitter/X
+                </a>
+              </li>
+              <li>
+                <a
+                  href="mailto:digonfly@gmail.com"
+                  className="text-gray-400 hover:text-red-400 text-sm transition flex items-center gap-2"
+                >
+                  📧 Email
+                </a>
+              </li>
+              <li>
+                <a
+                  href="https://github.com/digonfly"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-gray-400 hover:text-gray-300 text-sm transition flex items-center gap-2"
+                >
+                  💻 GitHub
+                </a>
+              </li>
+            </ul>
+
+            {/* Resources */}
+            <h3 className="text-white font-bold mb-2 text-sm">Data Sources</h3>
+            <ul className="space-y-1">
               <li>
                 <a
                   href="https://www.coingecko.com"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="text-gray-400 hover:text-green-400 text-sm transition"
+                  className="text-gray-500 hover:text-green-400 text-xs transition"
                 >
-                  CoinGecko API
+                  CoinGecko
                 </a>
               </li>
               <li>
@@ -213,32 +253,75 @@ export default function Footer() {
                   href="https://newsdata.io"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="text-gray-400 hover:text-green-400 text-sm transition"
+                  className="text-gray-500 hover:text-green-400 text-xs transition"
                 >
-                  NewsData API
-                </a>
-              </li>
-              <li>
-                <a
-                  href="https://alternative.me/crypto/fear-and-greed-index/"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="text-gray-400 hover:text-green-400 text-sm transition"
-                >
-                  Fear & Greed
+                  NewsData
                 </a>
               </li>
             </ul>
           </motion.div>
         </div>
 
+        {/* Owner Credit Section */}
+        <div className="border-t border-gray-800 pt-6 mb-4">
+          <div className="bg-gradient-to-r from-purple-500/10 via-pink-500/10 to-blue-500/10 border border-purple-500/20 rounded-2xl p-4 flex flex-col md:flex-row items-center justify-between gap-3">
+            <div className="flex items-center gap-3">
+              <div className="w-12 h-12 bg-gradient-to-br from-purple-500 to-pink-500 rounded-full flex items-center justify-center text-white font-bold text-xl shadow-[0_0_20px_rgba(168,85,247,0.5)]">
+                D
+              </div>
+              <div>
+                <p className="font-bold text-white">
+                  <Link href="/about" className="hover:text-purple-400 transition">
+                    Diganto Rabha
+                  </Link>
+                </p>
+                <p className="text-xs text-gray-400">🚀 Founder & Developer</p>
+              </div>
+            </div>
+            <div className="flex items-center gap-3">
+              <a
+                href="https://x.com/cryptonewshub0"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-gray-400 hover:text-sky-400 transition"
+                title="Twitter"
+              >
+                🐦
+              </a>
+              <a
+                href="mailto:digonfly@gmail.com"
+                className="text-gray-400 hover:text-red-400 transition"
+                title="Email"
+              >
+                📧
+              </a>
+              <a
+                href="https://github.com/digonfly"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-gray-400 hover:text-white transition"
+                title="GitHub"
+              >
+                💻
+              </a>
+              <Link
+                href="/about"
+                className="bg-purple-500 hover:bg-purple-600 text-white text-xs font-bold px-4 py-2 rounded-lg transition"
+              >
+                About Me →
+              </Link>
+            </div>
+          </div>
+        </div>
+
         {/* Disclaimer */}
-        <div className="border-t border-gray-800 pt-6">
+        <div className="border-t border-gray-800 pt-4">
           <p className="text-gray-500 text-xs text-center mb-2">
             ⚠️ Crypto investments are subject to market risks. Please do your own research before investing.
           </p>
           <p className="text-gray-600 text-sm text-center">
-            © {currentYear} <span className="rainbow-text">CryptoNewsHub</span>. All rights reserved. Made with 💚 in India.
+            © {currentYear} <span className="rainbow-text">CryptoNewsHub</span>. All rights reserved.
+            Made with 💚 by <Link href="/about" className="text-purple-400 hover:text-purple-300 font-bold">Diganto Rabha</Link> in India 🇮🇳
           </p>
         </div>
       </div>

@@ -7,6 +7,7 @@ import Bitcoin3D from "./components/Bitcoin3D";
 import AffiliateBanner from "./components/AffiliateBanner";
 import FAQ from "./components/FAQ";
 import AdBanner from "./components/AdBanner";
+import Newsletter from "./components/Newsletter";
 
 interface Coin {
   id: string;
@@ -163,7 +164,7 @@ export default function HomePage() {
         </motion.section>
       )}
 
-      {/* 📢 AD BANNER 1 - Top */}
+      {/* Ad Banner - Top */}
       <div className="max-w-7xl mx-auto px-4">
         <AdBanner type="banner" />
       </div>
@@ -235,18 +236,24 @@ export default function HomePage() {
         </section>
       )}
 
-      {/* 📢 AD BANNER 2 - Middle */}
+      {/* Ad Banner - Middle */}
       <div className="max-w-7xl mx-auto px-4">
         <AdBanner type="rectangle" />
       </div>
 
+      {/* 📧 NEWSLETTER - NEW! */}
+      <Newsletter />
+
       {/* FAQ Section */}
       <FAQ />
 
-      {/* 📢 AD BANNER 3 - Bottom */}
+      {/* Ad Banner - Bottom */}
       <div className="max-w-7xl mx-auto px-4 mb-10">
         <AdBanner type="banner" />
       </div>
+
+      {/* Social Bar (Bottom Fixed) */}
+      <AdBanner type="social-bar" />
     </div>
   );
 }

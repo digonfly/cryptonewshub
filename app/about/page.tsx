@@ -17,10 +17,10 @@ export default function AboutPage() {
   const socialLinks = [
     {
       name: "Twitter/X",
-      url: "https://x.com/cryptonewshub0",
+      url: "https://x.com/Digonrabha1",
       icon: "🐦",
       color: "hover:bg-sky-500",
-      handle: "@cryptonewshub0",
+      handle: "@Digonrabha1",
     },
     {
       name: "Email",
@@ -346,7 +346,7 @@ export default function AboutPage() {
               📧 Email Me
             </a>
             <a
-              href="https://x.com/cryptonewshub0"
+              href="https://x.com/@Digonrabha1"
               target="_blank"
               rel="noopener noreferrer"
               className="bg-sky-500 hover:bg-sky-600 text-white font-bold px-6 py-3 rounded-xl transition shadow-[0_0_20px_rgba(14,165,233,0.4)]"

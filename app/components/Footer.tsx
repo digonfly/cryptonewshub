@@ -207,7 +207,7 @@ export default function Footer() {
             <ul className="space-y-2 mb-4">
               <li>
                 <a
-                  href="https://x.com/cryptonewshub0"
+                  href="https://x.com/Digonrabha1"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="text-gray-400 hover:text-sky-400 text-sm transition flex items-center gap-2"
